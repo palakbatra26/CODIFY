@@ -1,37 +1,3 @@
-// import { NavLink } from "react-router-dom";
-// import "./sidebar.css";
-
-// const Sidebar = () => {
-//   return (
-//     <aside className="sidebar">
-//       <h2 className="sidebar-logo">CoDiFy</h2>
-
-//       <nav className="sidebar-nav">
-//         <NavLink
-//           to="/"
-//           className="sidebar-link"
-//         >
-//           Dashboard
-//         </NavLink>
-
-//         <NavLink to="/users" className="sidebar-link">
-//           Users
-//         </NavLink>
-
-//         <NavLink to="/creators" className="sidebar-link">
-//           Creators
-//         </NavLink>
-
-//         <NavLink to="/quizzes" className="sidebar-link">
-//           Quizzes
-//         </NavLink>
-//       </nav>
-//     </aside>
-//   );
-// };
-
-// export default Sidebar;
-
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FiHome, FiUsers, FiUserCheck, FiClipboard } from "react-icons/fi";
@@ -44,8 +10,12 @@ const Sidebar = () => {
     getToalNoUserQuizCreators()
       .then((res) => setData(res.data.data))
       .catch((err) => console.log(err));
-  }, []);
+  
+}, []);
 
+
+
+console.log(data+"this data from sidebar")
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
@@ -122,3 +92,7 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+
+
+

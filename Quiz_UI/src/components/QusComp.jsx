@@ -6,6 +6,7 @@ const QusComp = ({ qus }) => {
     setRightAnswers,
     setCheckedAnswer,
     setCurrentSubjectQusAns,
+    checkedAnswer,
   } = useContext(AnswersContext);
 
   const [newAns, setNewAns] = useState(null);
@@ -30,38 +31,69 @@ const QusComp = ({ qus }) => {
   }, [newAns]);
 
   return (
-    <div className="space-y-14">
-      {qus.map((q, i) => (
-        <div
-          key={q.id}
-          className="bg-gray-900 border border-gray-700 rounded-3xl p-10 shadow-lg hover:shadow-2xl transition"
-        >
-          <h2 className="text-white text-3xl font-semibold mb-8">
-            <span className="text-blue-400">Q{i + 1}.</span> {q.question}
-          </h2>
+    <div className="space-y-10 max-w-3xl mx-auto">
+      {qus.map((q, i) => {
+        const isAnswered = checkedAnswer.find((a) => a.id === q.id);
+        
+        return (
+          <div
+            key={q.id}
+            className="group bg-[#111] border border-white/5 rounded-[32px] p-8 md:p-12 transition-all duration-300 hover:border-blue-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          >
+            {/* Question Header */}
+            <div className="flex items-center gap-4 mb-8">
+              <span className="w-12 h-12 flex items-center justify-center rounded-2xl bg-blue-600/10 text-blue-500 font-black text-xl border border-blue-500/20">
+                {i + 1}
+              </span>
+              <div className="h-[1px] flex-grow bg-white/5"></div>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {q.options.map((op, index) => (
-              <label
-                key={index}
-                className="flex items-center gap-4 p-4 rounded-xl border border-gray-700 
-                cursor-pointer hover:bg-gray-800 transition"
-              >
-                <input
-                  type="radio"
-                  name={`question-${q.id}`}
-                  value={op}
-                  onChange={(e) =>
-                    setNewAns({ id: q.id, ans: e.target.value })
-                  }
-                  className="w-5 h-5 accent-blue-600"
-                />
-                <span className="text-xl text-gray-200">{op}</span>
-              </label>
-            ))}
+            <h2 className="text-white text-2xl md:text-3xl font-bold mb-10 leading-tight">
+              {q.question}
+            </h2>
+
+            {/* Options Grid */}
+            <div className="grid grid-cols-1 gap-4">
+              {q.options.map((op, index) => {
+                const isSelected = isAnswered?.ans === op;
+                
+                return (
+                  <label
+                    key={index}
+                    className={`relative flex items-center gap-6 p-6 rounded-2xl border transition-all duration-200 cursor-pointer group/opt
+                      ${isSelected 
+                        ? "bg-blue-600/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.1)]" 
+                        : "bg-white/[0.03] border-white/5 hover:bg-white/[0.06] hover:border-white/20"
+                      }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`question-${q.id}`}
+                      value={op}
+                      checked={isSelected}
+                      onChange={(e) =>
+                        setNewAns({ id: q.id, ans: e.target.value })
+                      }
+                      className="hidden"
+                    />
+                    
+                    {/* CUSTOM RADIO BUTTON */}
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all
+                      ${isSelected ? "border-blue-500" : "border-gray-600 group-hover/opt:border-gray-400"}`}>
+                      {isSelected && <div className="w-3 h-3 rounded-full bg-blue-500 animate-scale-in" />}
+                    </div>
+
+                    <span className={`text-xl font-medium transition-colors
+                      ${isSelected ? "text-white" : "text-gray-400 group-hover/opt:text-gray-200"}`}>
+                      {op}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

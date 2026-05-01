@@ -1,7 +1,7 @@
 import Result from "../models/Result.js";
 import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
-
+  
 /**
  * GLOBAL TOP USERS
  * Highest average score

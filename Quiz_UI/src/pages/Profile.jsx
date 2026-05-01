@@ -14,7 +14,7 @@ const Profile = () => {
     };
     fetchResults();
   }, []);
-
+  
   const totalSolved = results.length;
   const avgScore =
     totalSolved === 0

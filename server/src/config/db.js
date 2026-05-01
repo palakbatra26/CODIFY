@@ -7,6 +7,6 @@ const conn_db = async () => {
     } catch (error) {
         console.log("error: ", error)
     }
-}
+} 
 
 export default conn_db;

@@ -141,6 +141,35 @@ export const creator_CreatedQuizzes = async (req, res) => {
 
 
 
+// export const getQuizGrowthData = async (req, res) => {
+//     try {
+//         const result = await Quiz.aggregate([
+//             {
+//                 $group: {
+//                     _id: { $month: "$createdAt" },
+//                     quizzes: { $sum: 1 }
+//                 },
+//             },
+//             { $sort: { "_id": 1 } }
+//         ]);
+
+//         const monthNames = [
+//             "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+//             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+//         ];
+
+//         const formattedData = result.map(item => ({
+//             month: monthNames[item._id],
+//             quizzes: item.quizzes,
+//         }));
+
+//         res.status(200).json({ data: formattedData });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// }
+
 export const getQuizGrowthData = async (req, res) => {
     try {
         const result = await Quiz.aggregate([
@@ -148,19 +177,23 @@ export const getQuizGrowthData = async (req, res) => {
                 $group: {
                     _id: { $month: "$createdAt" },
                     quizzes: { $sum: 1 }
-                },
-            },
-            { $sort: { "_id": 1 } }
+                }
+            }
         ]);
 
         const monthNames = [
-            "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
 
-        const formattedData = result.map(item => ({
-            month: monthNames[item._id],
-            quizzes: item.quizzes,
+        const monthMap = {};
+        result.forEach(item => {
+            monthMap[item._id] = item.quizzes;
+        });
+
+        const formattedData = monthNames.map((month, index) => ({
+            month,
+            quizzes: monthMap[index + 1] || 0
         }));
 
         res.status(200).json({ data: formattedData });
@@ -168,31 +201,30 @@ export const getQuizGrowthData = async (req, res) => {
         console.log(error);
         res.status(500).json({ message: "Server error" });
     }
-}
-
+};
 
 
 export const getTechWiseQuizData = async (req, res) => {
-  try {
-    const result = await Quiz.aggregate([
-      {
-        $group: {
-          _id: "$tech",
-          quizzes: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          tech: "$_id",
-          quizzes: 1,
-        },
-      },
-    ]);
+    try {
+        const result = await Quiz.aggregate([
+            {
+                $group: {
+                    _id: "$tech",
+                    quizzes: { $sum: 1 },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    tech: "$_id",
+                    quizzes: 1,
+                },
+            },
+        ]);
 
-    res.status(200).json({ data: result });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server error" });
-  }
+        res.status(200).json({ data: result });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
 };

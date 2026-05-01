@@ -52,6 +52,7 @@ import {
 } from "recharts";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useMemo } from "react";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -75,37 +76,25 @@ const Dashboard = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(data);
-  const stats = [
-    { label: "Total Users", value: data.totalUsers },
-    { label: "Total Creators", value: data.totalCreators },
-    { label: "Total Quizzes", value: data.totalQuizzes },
-    { label: "Active Quizzes", value: data.totalQuizzes },
-  ];
-  const formattedTechData = techWiseData.map((item) => ({
-    ...item,
-    tech:
-      item.tech === "Java Programming"
-        ? "Java"
-        : item.tech === "C Programming"
-          ? "C"
-          : item.tech,
-  }));
-  // const quizGrowthData = [
-  //   { month: "Jan", quizzes: quizGrowthStats. },
-  //   { month: "Feb", quizzes: 18 },
-  //   { month: "Mar", quizzes: 30 },
-  //   { month: "Apr", quizzes: 45 },
-  //   { month: "May", quizzes: 64 },
-  // ];
+ 
+    const stats = [
+      { label: "Total Users", value: data.totalUsers },
+      { label: "Total Creators", value: data.totalCreators },
+      { label: "Total Quizzes", value: data.totalQuizzes },
+      { label: "Active Quizzes", value: data.totalQuizzes },
+    ];
 
-  // const techWiseData = [
-  //   { tech: "HTML", quizzes: 12 },
-  //   { tech: "CSS", quizzes: 8 },
-  //   { tech: "JavaScript", quizzes: 20 },
-  //   { tech: "React", quizzes: 14 },
-  //   { tech: "Node", quizzes: 10 },
-  // ];
+  const formattedTechData = useMemo(() => {
+    return techWiseData.map((item) => ({
+      ...item,
+      tech:
+        item.tech === "Java Programming"
+          ? "Java"
+          : item.tech === "C Programming"
+            ? "C"
+            : item.tech,
+    }));
+  }, [techWiseData]);
 
   return (
     <div className="dashboard">
@@ -127,13 +116,14 @@ const Dashboard = () => {
             <LineChart data={quizGrowthData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
-              <YAxis />
+              <YAxis allowDecimals={false} />
               <Tooltip />
               <Line
                 type="monotone"
                 dataKey="quizzes"
                 stroke="#4f46e5"
                 strokeWidth={3}
+                dot={{ r: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
