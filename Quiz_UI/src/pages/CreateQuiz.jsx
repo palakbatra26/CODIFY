@@ -9,6 +9,7 @@ const CreateQuiz = () => {
 
   const [title, setTitle] = useState("");
   const [tech, setTech] = useState("");
+  const [timer, setTimer] = useState(30);
   const [questions, setQuestions] = useState([
     { question: "", options: ["", ""], answer: "" }
   ]);
@@ -69,6 +70,7 @@ const CreateQuiz = () => {
       const payload = {
         title,
         tech,
+        timer,
         questions: questions.map((q, i) => ({
           id: i + 1,
           question: q.question,
@@ -117,7 +119,7 @@ const CreateQuiz = () => {
 
         <form onSubmit={handleSubmit} className="space-y-12">
           {/* CORE DETAILS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#112240] p-10 rounded-[40px] border border-cyan-500/10 shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#112240] p-10 rounded-[40px] border border-cyan-500/10 shadow-2xl">
             <div className="space-y-4">
                 <label className="text-xs font-black text-cyan-500/50 uppercase tracking-widest ml-1">Quiz Title</label>
                 <input
@@ -142,6 +144,18 @@ const CreateQuiz = () => {
                         <option key={index} value={t.name}>{t.name}</option>
                     ))}
                 </select>
+            </div>
+            <div className="space-y-4">
+                <label className="text-xs font-black text-cyan-500/50 uppercase tracking-widest ml-1">Timer (Minutes)</label>
+                <input
+                    type="number"
+                    placeholder="Time limit..."
+                    value={timer}
+                    onChange={(e) => setTimer(e.target.value)}
+                    required
+                    min="1"
+                    className="w-full p-5 rounded-2xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition font-bold"
+                />
             </div>
           </div>
 

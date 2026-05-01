@@ -13,6 +13,7 @@ const Qus = () => {
 
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(null);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -20,6 +21,7 @@ const Qus = () => {
         const res = await API.get(`/quizzes/${quizId}`);
         setQuiz(res.data.data);
         setCurrentSubjectQusAns(res.data.data.questions);
+        setTimeLeft(res.data.data.timer * 60); // Convert minutes to seconds
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -28,6 +30,19 @@ const Qus = () => {
 
     fetchQuiz();
   }, [quizId]);
+
+  useEffect(() => {
+    if (timeLeft === null || timeLeft <= 0) {
+      if (timeLeft === 0) submitQuiz();
+      return;
+    }
+
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
 
   const submitQuiz = async () => {
     try {
@@ -45,8 +60,14 @@ const Qus = () => {
         state: { result: res.data.result },
       });
     } catch (err) {
-      alert("Submit failed");
+      console.error("Submit failed", err);
     }
+  };
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
   if (loading) return (
@@ -63,9 +84,15 @@ const Qus = () => {
       <div className="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
         <div className="max-w-3xl mx-auto">
             <div className="flex justify-between items-center mb-4">
-                <span className="text-sm font-bold text-cyan-100/40 tracking-widest uppercase">
-                    {quiz.tech} QUIZ
-                </span>
+                <div className="flex items-center gap-4">
+                    <span className="text-sm font-bold text-cyan-100/40 tracking-widest uppercase">
+                        {quiz.tech} QUIZ
+                    </span>
+                    <div className={`flex items-center gap-2 px-3 py-1 rounded-lg border ${timeLeft < 60 ? 'border-red-500/50 bg-red-500/10 text-red-400 animate-pulse' : 'border-cyan-500/20 bg-cyan-500/5 text-cyan-400'}`}>
+                        <div className="w-2 h-2 rounded-full bg-current"></div>
+                        <span className="font-mono font-black">{formatTime(timeLeft)}</span>
+                    </div>
+                </div>
                 <span className="text-sm font-black text-cyan-400">
                     {checkedAnswer.length} / {quiz.questions.length} ANSWERED
                 </span>

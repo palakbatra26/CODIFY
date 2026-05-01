@@ -165,6 +165,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
 const CreatorDashboard = lazy(() => import("./pages/CreatorDashboard"));
 const QuizSolvers = lazy(() => import("./pages/QuizSolvers"));
+const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 
 // -------- COMPONENTS --------
 import LazyWrapper from "./components/LazyWrapper";
@@ -256,6 +257,19 @@ const App = () => {
                 <UserRoute>
                   <LazyWrapper>
                     <Profile />
+                  </LazyWrapper>
+                </UserRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leaderboard"
+            element={
+              <ProtectedRoute>
+                <UserRoute>
+                  <LazyWrapper>
+                    <Leaderboard />
                   </LazyWrapper>
                 </UserRoute>
               </ProtectedRoute>
