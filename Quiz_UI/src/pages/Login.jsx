@@ -31,7 +31,13 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      navigate("/technology"); // quiz page
+      // 🔀 ROLE-BASED REDIRECTION
+      const user = res.data.user;
+      if (user.role === "creator") {
+        navigate("/creator/dashboard");
+      } else {
+        navigate("/technology");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
