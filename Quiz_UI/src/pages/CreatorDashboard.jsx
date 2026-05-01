@@ -82,13 +82,22 @@ const CreatorDashboard = () => {
             </div>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 font-bold hover:bg-red-500 hover:text-white transition-all active:scale-95"
-          >
-            <LogOut size={20} />
-            LOGOUT
-          </button>
+          <div className="flex flex-col md:flex-row gap-4">
+            <button
+                onClick={() => navigate("/admin")}
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-bold hover:bg-cyan-500 hover:text-[#0a192f] transition-all active:scale-95"
+            >
+                <Shield size={20} />
+                ADMIN PANEL
+            </button>
+            <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 font-bold hover:bg-red-500 hover:text-white transition-all active:scale-95"
+            >
+                <LogOut size={20} />
+                LOGOUT
+            </button>
+          </div>
         </div>
 
         {/* STATS GRID */}
