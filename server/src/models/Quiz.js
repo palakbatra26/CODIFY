@@ -47,6 +47,10 @@ const quizSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    timer: {
+        type: Number,
+        default: 30 // in minutes
+    },
 }, { timestamps: true }
 )
 
