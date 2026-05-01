@@ -41,12 +41,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[#0a192f] flex items-center justify-center p-6 selection:bg-cyan-500/30">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-10 rounded-3xl w-full max-w-[450px] border border-white/5 shadow-2xl"
+        className="bg-[#112240] p-10 rounded-3xl w-full max-w-[450px] border border-cyan-500/10 shadow-2xl"
       >
-        <h1 className="text-4xl text-white mb-8 text-center font-black tracking-tight">Create Account</h1>
+        <h1 className="text-4xl text-white mb-8 text-center font-black tracking-tighter">Join Codify</h1>
 
         {error && (
           <p className="bg-red-500/20 text-red-400 p-3 rounded-xl mb-6 text-center text-sm font-medium">
@@ -62,7 +62,7 @@ const Register = () => {
             value={form.name}
             onChange={handleChange}
             required
-            className="w-full p-4 rounded-xl bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition"
+            className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition"
           />
 
           <input
@@ -72,7 +72,7 @@ const Register = () => {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full p-4 rounded-xl bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition"
+            className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition"
           />
 
           <div className="relative">
@@ -83,24 +83,24 @@ const Register = () => {
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full p-4 rounded-xl bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition"
+              className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-500/50 hover:text-cyan-400 transition"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase ml-1">Account Type</label>
+            <label className="text-xs font-black text-cyan-500/50 uppercase ml-1 tracking-widest">Account Type</label>
             <select
               name="role"
               value={form.role}
               onChange={handleChange}
-              className="w-full p-4 rounded-xl bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition appearance-none cursor-pointer"
+              className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition appearance-none cursor-pointer font-bold"
             >
               <option value="user">Student (Take Quizzes)</option>
               <option value="creator">Creator (Make Quizzes)</option>
@@ -111,18 +111,18 @@ const Register = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 transition active:scale-95 disabled:opacity-50"
+          className="w-full mt-8 py-4 rounded-2xl bg-cyan-600 text-[#0a192f] font-black text-lg hover:bg-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition active:scale-95 disabled:opacity-50"
         >
-          {loading ? "Creating Account..." : "Join CoDiFy"}
+          {loading ? "Creating Account..." : "Create Elite Account"}
         </button>
 
-        <p className="text-gray-400 text-sm text-center mt-4">
-          Already have an account?{" "}
+        <p className="text-cyan-100/40 text-sm text-center mt-6 font-medium">
+          Already a member?{" "}
           <span
-            className="text-blue-400 cursor-pointer"
+            className="text-cyan-400 hover:underline font-bold cursor-pointer"
             onClick={() => navigate("/login")}
           >
-            Login
+            Sign In
           </span>
         </p>
       </form>

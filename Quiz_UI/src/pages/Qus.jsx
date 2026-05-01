@@ -58,21 +58,21 @@ const Qus = () => {
   const progress = (checkedAnswer.length / (quiz?.questions?.length || 1)) * 100;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pb-32">
+    <div className="min-h-screen bg-[#0a192f] text-white pb-32">
       {/* STICKY HEADER WITH PROGRESS */}
-      <div className="sticky top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
+      <div className="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
         <div className="max-w-3xl mx-auto">
             <div className="flex justify-between items-center mb-4">
-                <span className="text-sm font-bold text-gray-500 tracking-widest uppercase">
+                <span className="text-sm font-bold text-cyan-100/40 tracking-widest uppercase">
                     {quiz.tech} QUIZ
                 </span>
-                <span className="text-sm font-black text-blue-500">
+                <span className="text-sm font-black text-cyan-400">
                     {checkedAnswer.length} / {quiz.questions.length} ANSWERED
                 </span>
             </div>
             <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                 <div 
-                    className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 transition-all duration-500 ease-out"
+                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                 ></div>
             </div>
@@ -82,19 +82,19 @@ const Qus = () => {
       {/* QUIZ CONTENT */}
       <div className="max-w-4xl mx-auto px-6 pt-16">
         <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4">{quiz.title}</h1>
-            <p className="text-gray-500 font-medium">Please select the correct answer for each question below.</p>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-white">{quiz.title}</h1>
+            <p className="text-cyan-100/40 font-medium">Please select the correct answer for each question below.</p>
         </div>
 
         <QusComp qus={quiz.questions} />
 
         {/* FINAL SUBMIT SECTION */}
-        <div className="mt-20 p-12 rounded-[40px] bg-gradient-to-b from-blue-600/10 to-transparent border border-blue-500/10 text-center">
-            <h2 className="text-3xl font-bold mb-4">All Done?</h2>
-            <p className="text-gray-400 mb-8 max-w-md mx-auto">Make sure you've answered all questions before submitting your results.</p>
+        <div className="mt-20 p-12 rounded-[40px] bg-gradient-to-b from-cyan-600/10 to-transparent border border-cyan-500/10 text-center">
+            <h2 className="text-3xl font-bold mb-4 text-white">All Done?</h2>
+            <p className="text-cyan-100/40 mb-8 max-w-md mx-auto">Make sure you've answered all questions before submitting your results.</p>
             <button
                 onClick={submitQuiz}
-                className="w-full max-w-md py-6 rounded-2xl text-2xl font-black bg-blue-600 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/20 active:scale-95"
+                className="w-full max-w-md py-6 rounded-2xl text-2xl font-black bg-cyan-600 text-[#0a192f] hover:bg-cyan-500 transition-all shadow-3xl shadow-cyan-500/20 active:scale-95"
             >
                 Submit My Answers
             </button>

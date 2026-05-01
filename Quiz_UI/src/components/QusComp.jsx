@@ -38,11 +38,11 @@ const QusComp = ({ qus }) => {
         return (
           <div
             key={q.id}
-            className="group bg-[#111] border border-white/5 rounded-[32px] p-8 md:p-12 transition-all duration-300 hover:border-blue-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            className="group bg-[#112240] border border-cyan-500/10 rounded-[32px] p-8 md:p-12 transition-all duration-300 hover:border-cyan-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
           >
             {/* Question Header */}
             <div className="flex items-center gap-4 mb-8">
-              <span className="w-12 h-12 flex items-center justify-center rounded-2xl bg-blue-600/10 text-blue-500 font-black text-xl border border-blue-500/20">
+              <span className="w-12 h-12 flex items-center justify-center rounded-2xl bg-cyan-600/10 text-cyan-400 font-black text-xl border border-cyan-500/20">
                 {i + 1}
               </span>
               <div className="h-[1px] flex-grow bg-white/5"></div>
@@ -62,7 +62,7 @@ const QusComp = ({ qus }) => {
                     key={index}
                     className={`relative flex items-center gap-6 p-6 rounded-2xl border transition-all duration-200 cursor-pointer group/opt
                       ${isSelected 
-                        ? "bg-blue-600/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.1)]" 
+                        ? "bg-cyan-600/10 border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.1)]" 
                         : "bg-white/[0.03] border-white/5 hover:bg-white/[0.06] hover:border-white/20"
                       }`}
                   >
@@ -79,12 +79,12 @@ const QusComp = ({ qus }) => {
                     
                     {/* CUSTOM RADIO BUTTON */}
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all
-                      ${isSelected ? "border-blue-500" : "border-gray-600 group-hover/opt:border-gray-400"}`}>
-                      {isSelected && <div className="w-3 h-3 rounded-full bg-blue-500 animate-scale-in" />}
+                      ${isSelected ? "border-cyan-500" : "border-gray-600 group-hover/opt:border-gray-400"}`}>
+                      {isSelected && <div className="w-3 h-3 rounded-full bg-cyan-500 animate-scale-in" />}
                     </div>
 
                     <span className={`text-xl font-medium transition-colors
-                      ${isSelected ? "text-white" : "text-gray-400 group-hover/opt:text-gray-200"}`}>
+                      ${isSelected ? "text-white" : "text-cyan-100/40 group-hover/opt:text-cyan-100/80"}`}>
                       {op}
                     </span>
                   </label>

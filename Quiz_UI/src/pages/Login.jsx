@@ -40,15 +40,15 @@ const Login = () => {
   };
  
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="min-h-screen bg-[#0a192f] flex items-center justify-center p-6 selection:bg-cyan-500/30">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-10 rounded-2xl w-[400px]"
+        className="bg-[#112240] p-10 rounded-3xl w-full max-w-[420px] border border-cyan-500/10 shadow-2xl"
       >
-        <h1 className="text-3xl text-white mb-6 text-center font-bold">Login</h1>
+        <h1 className="text-4xl text-white mb-8 text-center font-black tracking-tighter">Login</h1>
 
         {error && (
-          <p className="bg-red-500/20 text-red-400 p-2 rounded mb-4 text-center text-sm">
+          <p className="bg-red-500/20 text-red-400 p-3 rounded-xl mb-6 text-center text-sm font-medium">
             {error}
           </p>
         )}
@@ -57,11 +57,11 @@ const Login = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email Address"
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full p-3 rounded bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition"
+            className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition"
           />
 
           <div className="relative">
@@ -72,12 +72,12 @@ const Login = () => {
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full p-3 rounded bg-gray-800 text-white outline-none border border-transparent focus:border-blue-500 transition"
+              className="w-full p-4 rounded-xl bg-[#0a192f] text-white outline-none border border-transparent focus:border-cyan-500 transition"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-500/50 hover:text-cyan-400 transition"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -87,14 +87,14 @@ const Login = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-6 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition active:scale-95 disabled:opacity-50"
+          className="w-full mt-8 py-4 rounded-2xl bg-cyan-600 text-[#0a192f] font-black text-lg hover:bg-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition active:scale-95 disabled:opacity-50"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Logging in..." : "Access Dashboard"}
         </button>
 
-        <p className="text-gray-400 text-sm mt-4">
+        <p className="text-cyan-100/40 text-sm text-center mt-6 font-medium">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-blue-500 hover:underline">
+          <Link to="/register" className="text-cyan-400 hover:underline font-bold">
             Create one
           </Link>
         </p>
