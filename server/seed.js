@@ -14,7 +14,7 @@ const seedData = async () => {
     console.log("Database connected for seeding...");
 
     // 1. Create Official Creator
-    const strongPassword = "admin123";
+    const strongPassword = "Codify@Admin#2026";
     const hashedPassword = await bcrypt.hash(strongPassword, 10);
     let creator = await User.findOne({ email: "admin@gmail.com" });
     
