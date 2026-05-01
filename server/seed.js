@@ -13,20 +13,21 @@ const seedData = async () => {
     await mongoose.connect(MONGO_URI);
     console.log("Database connected for seeding...");
 
-    // 1. Create Official Creator
+    // 1. Create/Update Official Creator
     const strongPassword = "Codify@Admin#2026";
     const hashedPassword = await bcrypt.hash(strongPassword, 10);
-    let creator = await User.findOne({ email: "admin@gmail.com" });
     
-    if (!creator) {
-      creator = await User.create({
+    let creator = await User.findOneAndUpdate(
+      { email: "admin@gmail.com" },
+      { 
         name: "Official Creator",
-        email: "admin@gmail.com",
         password: hashedPassword,
-        role: "creator",
-      });
-      console.log(`Creator user updated: admin@gmail.com / ${strongPassword}`);
-    }
+        role: "creator"
+      },
+      { upsert: true, new: true }
+    );
+    
+    console.log(`Creator user synchronized: admin@gmail.com / ${strongPassword}`);
 
     // 2. Comprehensive Quizzes (20 Questions Each)
     const quizzes = [
