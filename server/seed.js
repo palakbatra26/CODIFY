@@ -14,18 +14,18 @@ const seedData = async () => {
     console.log("Database connected for seeding...");
 
     // 1. Create Official Creator
-    const strongPassword = "Codify@2026!Secure";
+    const strongPassword = "admin123";
     const hashedPassword = await bcrypt.hash(strongPassword, 10);
-    let creator = await User.findOne({ email: "creator@test.com" });
+    let creator = await User.findOne({ email: "admin@gmail.com" });
     
     if (!creator) {
       creator = await User.create({
         name: "Official Creator",
-        email: "creator@test.com",
+        email: "admin@gmail.com",
         password: hashedPassword,
         role: "creator",
       });
-      console.log(`Creator user updated: creator@test.com / ${strongPassword}`);
+      console.log(`Creator user updated: admin@gmail.com / ${strongPassword}`);
     }
 
     // 2. Comprehensive Quizzes (20 Questions Each)

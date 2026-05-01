@@ -9,17 +9,11 @@ import ownerRoutes from './routes/owner.routes.js'
 
 const app = express();
 
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "http://localhost:5174"
-    ],
-}));
-
+app.use(cors()); // Allow all origins for deployment
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Codify Backend Running 🚀");
+    res.send("Codify Backend v2.0 - Active 🚀");
 });
 
 // API routes
