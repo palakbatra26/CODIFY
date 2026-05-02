@@ -186,10 +186,10 @@ const seedData = async () => {
       }
     ];
 
-    for (const q of quizzes) {
-      await Quiz.findOneAndUpdate({ tech: q.tech }, q, { upsert: true, new: true });
-      console.log(`Updated/Added 20 questions for: ${q.tech}`);
-    }
+     for (const q of quizzes) {
+       await Quiz.findOneAndUpdate({ tech: q.tech }, { ...q, status: "approved" }, { upsert: true, new: true });
+       console.log(`Updated/Added 20 questions for: ${q.tech}`);
+     }
 
     console.log("Full database seeding with 20 questions each completed! 🚀");
     process.exit();

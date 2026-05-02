@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import quizRoutes from "./routes/quiz.routes.js";
+import quizAdminRoutes from "./routes/quiz.admin.routes.js";
 import authRoutes from "./routes/auth.route.js";
 import { protect, creatorOnly } from "./middleware/auth.middleware.js";
 import leaderboardRoutes from "./routes/leaderboard.routes.js";
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 // API routes
 app.use("/api/quizzes", quizRoutes);
+app.use("/api/admin/quizzes", quizAdminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/results", resultRoutes);
