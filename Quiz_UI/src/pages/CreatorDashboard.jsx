@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, LogOut, Trash2, Users, Layout, Zap, Award } from "lucide-react";
+import { Plus, LogOut, Trash2, Users, Layout, Zap, Award, Shield } from "lucide-react";
 import API from "../utils/api";
 
 const CreatorDashboard = () => {
