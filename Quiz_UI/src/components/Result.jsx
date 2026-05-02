@@ -135,37 +135,37 @@ const Result = () => {
 
       {/* HIDDEN CERTIFICATE TEMPLATE FOR EXPORT */}
       <div className="fixed left-[-9999px] top-[-9999px]">
-        <div 
+        <div
             ref={certificateRef}
-            className="w-[1200px] h-[850px] bg-[#0a192f] text-white p-20 flex flex-col items-center justify-center border-[20px] border-[#112240] relative"
+            className="w-[1200px] h-[850px] bg-[#0a192f] text-[#ffffff] p-20 flex flex-col items-center justify-center border-[20px] border-[#112240] relative"
             style={{ fontFamily: "'Inter', sans-serif" }}
         >
             <div className="absolute top-10 right-10 opacity-10">
-                <Award size={300} className="text-cyan-500" />
+                <Award size={300} className="text-[#06b6d4]" />
             </div>
             <div className="absolute bottom-10 left-10 opacity-10">
-                <Star size={300} className="text-blue-500" />
+                <Star size={300} className="text-[#3b82f6]" />
             </div>
-            
-            <div className="text-cyan-400 font-black tracking-[0.3em] uppercase text-xl mb-10">Certificate of Excellence</div>
+
+            <div className="text-[#22d3ee] font-black tracking-[0.3em] uppercase text-xl mb-10">Certificate of Excellence</div>
             <h1 className="text-8xl font-black tracking-tighter mb-10 uppercase">Mastery Achieved.</h1>
-            <p className="text-2xl text-gray-400 mb-12 italic">This document officially recognizes the logical depth and technical proficiency of</p>
-            <div className="text-7xl font-black text-white mb-12 border-b-8 border-cyan-500 pb-4 px-20">{user.name}</div>
-            <p className="text-2xl text-gray-400 mb-16 text-center max-w-3xl leading-relaxed">For successfully completing the engineering assessment in <span className="text-white font-bold uppercase">{state.result.tech || "Advanced Technology"}</span> with a performance ratio of <span className="text-cyan-400 font-black">{percentage}%</span>.</p>
-            
+            <p className="text-2xl text-[#9ca3af] mb-12 italic">This document officially recognizes the logical depth and technical proficiency of</p>
+            <div className="text-7xl font-black text-[#ffffff] mb-12 border-b-8 border-[#06b6d4] pb-4 px-20">{user.name}</div>
+            <p className="text-2xl text-[#9ca3af] mb-16 text-center max-w-3xl leading-relaxed">For successfully completing the engineering assessment in                      <span className="text-[#ffffff] font-bold uppercase">{state.result.tech || "Advanced Technology"}</span> with a performance ratio of <span className="text-[#22d3ee] font-black">{percentage}%</span>.</p>
+
             <div className="flex justify-between w-full mt-10 px-20">
                 <div className="text-center">
-                    <div className="w-48 h-[2px] bg-gray-700 mb-4 mx-auto"></div>
-                    <div className="text-sm font-black text-gray-500 uppercase tracking-widest">Date Issued</div>
+                    <div className="w-48 h-[2px] bg-[#374151] mb-4 mx-auto"></div>
+                    <div className="text-sm font-black text-[#6b7280] uppercase tracking-widest">Date Issued</div>
                     <div className="font-bold">{new Date().toLocaleDateString()}</div>
                 </div>
                 <div className="text-center">
-                    <div className="text-4xl font-black text-cyan-400 mb-2 tracking-tighter">CODIFY.</div>
-                    <div className="text-xs font-black text-gray-500 uppercase tracking-widest">Elite Learning Engine</div>
+                    <div className="text-4xl font-black text-[#22d3ee] mb-2 tracking-tighter">CODIFY.</div>
+                    <div className="text-xs font-black text-[#6b7280] uppercase tracking-widest">Elite Learning Engine</div>
                 </div>
                 <div className="text-center">
-                    <div className="w-48 h-[2px] bg-gray-700 mb-4 mx-auto"></div>
-                    <div className="text-sm font-black text-gray-500 uppercase tracking-widest">Platform Verify</div>
+                    <div className="w-48 h-[2px] bg-[#374151] mb-4 mx-auto"></div>
+                    <div className="text-sm font-black text-[#6b7280] uppercase tracking-widest">Platform Verify</div>
                     <div className="font-bold">#CF-{Math.floor(Math.random()*1000000)}</div>
                 </div>
             </div>
