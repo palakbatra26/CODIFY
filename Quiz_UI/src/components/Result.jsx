@@ -137,12 +137,103 @@ const Result = () => {
       <div className="fixed left-[-9999px] top-[-9999px]">
         <div
             ref={certificateRef}
-            className="w-[1200px] h-[850px] bg-[#0a192f] text-[#ffffff] p-20 flex flex-col items-center justify-center border-[20px] border-[#112240] relative"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="w-[1200px] h-[850px] bg-gradient-to-br from-[#0a192f] to-[#112240] text-[#ffffff] p-16 flex flex-col items-center justify-center border-[24px] border-[#1d3461] relative overflow-hidden"
+            style={{ fontFamily: "'Inter', 'Playfair Display', serif" }}
         >
-            <div className="absolute top-10 right-10 opacity-10">
-                <Award size={300} className="text-[#06b6d4]" />
+            {/* Decorative Background Elements */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-5">
+                <div className="absolute top-20 left-20 w-64 h-64 border-8 border-[#22d3ee] rounded-full"></div>
+                <div className="absolute bottom-20 right-20 w-96 h-96 border-8 border-[#3b82f6] rotate-45"></div>
             </div>
+
+            {/* Corner Decorations */}
+            <div className="absolute top-8 left-8 w-16 h-16 border-l-4 border-t-4 border-[#22d3ee]"></div>
+            <div className="absolute top-8 right-8 w-16 h-16 border-r-4 border-t-4 border-[#22d3ee]"></div>
+            <div className="absolute bottom-8 left-8 w-16 h-16 border-l-4 border-b-4 border-[#22d3ee]"></div>
+            <div className="absolute bottom-8 right-8 w-16 h-16 border-r-4 border-b-4 border-[#22d3ee]"></div>
+
+            {/* Top Decorative Icons */}
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-20">
+                <Award size={200} className="text-[#06b6d4] fill-[#06b6d4]" />
+            </div>
+            <div className="absolute bottom-40 left-8 opacity-10 rotate-12">
+                <Star size={120} className="text-[#3b82f6] fill-[#3b82f6]" />
+            </div>
+            <div className="absolute bottom-40 right-8 opacity-10 -rotate-12">
+                <Star size={120} className="text-[#3b82f6] fill-[#3b82f6]" />
+            </div>
+
+            {/* Main Content Container */}
+            <div className="relative z-10 text-center max-w-5xl mx-auto space-y-8">
+                {/* Header Badge */}
+                <div className="inline-block px-8 py-3 border-2 border-dashed border-[#22d3ee] rounded-full mb-6">
+                    <span className="text-[#22d3ee] font-bold text-sm tracking-[0.3em] uppercase">Certificate of Excellence</span>
+                </div>
+
+                {/* Title */}
+                <div className="space-y-2 mb-10">
+                    <h2 className="text-[#9ca3af] text-lg font-medium tracking-wider uppercase">This certificate is proudly presented to</h2>
+                    <h1 className="text-6xl md:text-7xl font-black text-white tracking-tight leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                        {user.name}
+                    </h1>
+                </div>
+
+                {/* Achievement Description */}
+                <div className="w-full max-w-4xl mx-auto space-y-4 mb-12">
+                    <div className="h-px w-32 bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent mx-auto"></div>
+                    <p className="text-xl text-[#d1d5db] leading-relaxed">
+                        For outstanding performance and exceptional achievement in the
+                        <span className="text-white font-bold mx-2">{state.result.tech || "Advanced Technology"}</span>
+                        engineering assessment, demonstrating mastery with a score of
+                        <span className="text-[#22d3ee] font-black text-2xl mx-2">{percentage}%</span>
+                    </p>
+                    <div className="h-px w-32 bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent mx-auto"></div>
+                </div>
+
+                {/* Score and Stats Display */}
+                <div className="flex items-center justify-center gap-12 mb-12">
+                    <div className="text-center">
+                        <div className="text-5xl font-black text-[#22d3ee]">{score}</div>
+                        <div className="text-[#9ca3af] text-sm uppercase tracking-wider mt-1">Correct Answers</div>
+                        <div className="text-[#6b7280] text-xs">out of {totalQuestions}</div>
+                    </div>
+                    <div className="w-px h-20 bg-[#374151]"></div>
+                    <div className="text-center">
+                        <div className="text-5xl font-black text-[#3b82f6]">{percentage}%</div>
+                        <div className="text-[#9ca3af] text-sm uppercase tracking-wider mt-1">Accuracy</div>
+                    </div>
+                </div>
+
+                {/* Footer Section */}
+                <div className="flex items-end justify-between w-full max-w-4xl mx-auto mt-16 pt-8 border-t-2 border-[#374151]">
+                    {/* Date */}
+                    <div className="text-center">
+                        <div className="text-[#6b7280] text-xs uppercase tracking-widest mb-2">Date Issued</div>
+                        <div className="text-white font-bold text-lg">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+                    </div>
+
+                    {/* Logo/Brand */}
+                    <div className="text-center">
+                        <div className="text-4xl font-black text-[#22d3ee] mb-1 tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>CODIFY</div>
+                        <div className="text-[#6b7280] text-xs uppercase tracking-widest">Elite Learning Engine</div>
+                    </div>
+
+                    {/* Certificate ID */}
+                    <div className="text-center">
+                        <div className="text-[#6b7280] text-xs uppercase tracking-widest mb-2">Verification ID</div>
+                        <div className="text-white font-mono font-bold text-lg">#CF-{Math.floor(Math.random()*1000000).toString().padStart(6, '0')}</div>
+                    </div>
+                </div>
+
+                {/* Bottom Seal */}
+                <div className="mt-8 relative">
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-[#22d3ee] rounded-full flex items-center justify-center opacity-80">
+                        <Award size={24} className="text-[#0a192f] fill-[#0a192f]" />
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
             <div className="absolute bottom-10 left-10 opacity-10">
                 <Star size={300} className="text-[#3b82f6]" />
             </div>
