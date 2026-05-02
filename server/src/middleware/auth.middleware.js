@@ -34,7 +34,7 @@ export const protect = (req, res, next) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 }; 
- 
+
 /**
  * Creator-only guard
  */
@@ -43,6 +43,18 @@ export const creatorOnly = (req, res, next) => {
     return res
       .status(403)
       .json({ message: "Access denied. Creator only." });
+  }
+  next();
+};
+
+/**
+ * Admin-only guard
+ */
+export const adminOnly = (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Access denied. Admin only." });
   }
   next();
 };

@@ -6,6 +6,7 @@ import { protect, creatorOnly } from "./middleware/auth.middleware.js";
 import leaderboardRoutes from "./routes/leaderboard.routes.js";
 import resultRoutes from './routes/result.route.js'
 import ownerRoutes from './routes/owner.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/results", resultRoutes);
 app.use('/api/owner',ownerRoutes)
+app.use('/api/admin', adminRoutes)
 
 
 
