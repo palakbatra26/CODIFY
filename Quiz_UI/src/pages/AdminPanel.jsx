@@ -60,6 +60,48 @@ const AdminPanel = () => {
     }
   };
 
+  const handleApproveQuiz = async (quizId) => {
+    if (window.confirm("Are you sure you want to approve this quiz?")) {
+      try {
+        await API.patch(`/admin/quizzes/${quizId}/approve`, { moderationNotes: "Approved via admin panel" });
+        // Update local state
+        setQuizzes(prevQuizzes => 
+          prevQuizzes.map(quiz => 
+            quiz._id === quizId ? {...quiz, status: "approved"} : quiz
+          )
+        );
+      } catch (err) {
+        console.error(err);
+        alert("Failed to approve quiz");
+      }
+    }
+  };
+
+  const handleRejectQuiz = async (quizId) => {
+    const notes = window.prompt("Please provide a reason for rejecting this quiz:");
+    if (notes === null) return; // User cancelled
+    
+    if (notes.trim() === "") {
+      alert("Please provide a reason for rejection");
+      return;
+    }
+    
+    if (window.confirm("Are you sure you want to reject this quiz?")) {
+      try {
+        await API.patch(`/admin/quizzes/${quizId}/reject`, { moderationNotes: notes });
+        // Update local state
+        setQuizzes(prevQuizzes => 
+          prevQuizzes.map(quiz => 
+            quiz._id === quizId ? {...quiz, status: "rejected"} : quiz
+          )
+        );
+      } catch (err) {
+        console.error(err);
+        alert("Failed to reject quiz");
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
