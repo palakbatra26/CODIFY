@@ -11,17 +11,17 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("stats");
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
         const [statsRes, usersRes, quizzesRes] = await Promise.all([
-          API.get("/owner/total"),
-          API.get("/owner/all-users"),
-          API.get("/owner/all-quizzes")
+          API.get("/admin/users/stats"),
+          API.get("/admin/users"),
+          API.get("/admin/quizzes")
         ]);
         setStats(statsRes.data.data);
-        setUsers(usersRes.data);
-        setQuizzes(quizzesRes.data);
+        setUsers(usersRes.data.data);
+        setQuizzes(quizzesRes.data.data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -68,7 +68,7 @@ const AdminPanel = () => {
                     onClick={() => setActiveTab("quizzes")} 
                     className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'quizzes' ? 'bg-cyan-500 text-[#0a192f]' : 'hover:bg-white/5 text-gray-400'}`}
                 >
-                    RESOURCES
+                    QUIZZES
                 </button>
             </div>
         </div>
@@ -112,39 +112,68 @@ const AdminPanel = () => {
                     <div className="text-cyan-400 font-black text-xl">{users.length} TOTAL</div>
                 </div>
 
-                <div className="bg-[#112240] rounded-[48px] border border-white/5 overflow-hidden">
-                    <table className="w-full text-left">
-                        <thead className="bg-white/5">
-                            <tr>
-                                <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Engineer</th>
-                                <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Credentials</th>
-                                <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Joined</th>
-                                <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                            {users.map((u) => (
-                                <tr key={u._id} className="hover:bg-white/[0.02] transition-colors group">
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-black">
-                                                {u.name.charAt(0).toUpperCase()}
-                                            </div>
-                                            <span className="font-bold text-lg">{u.name}</span>
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-gray-400 font-medium">{u.email}</td>
-                                    <td className="px-8 py-6 text-gray-500 text-sm font-bold">{new Date(u.createdAt).toLocaleDateString()}</td>
-                                    <td className="px-8 py-6 text-right">
-                                        <button className="p-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all opacity-0 group-hover:opacity-100">
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                 <div className="bg-[#112240] rounded-[48px] border border-white/5 overflow-hidden">
+                     <table className="w-full text-left">
+                         <thead className="bg-white/5">
+                             <tr>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Engineer</th>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Credentials</th>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Role</th>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Status</th>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest">Joined</th>
+                                 <th className="px-8 py-6 text-xs font-black text-gray-500 uppercase tracking-widest text-right">Actions</th>
+                             </tr>
+                         </thead>
+                         <tbody className="divide-y divide-white/5">
+                             {users.map((u) => (
+                                 <tr key={u._id} className="hover:bg-white/[0.02] transition-colors group">
+                                     <td className="px-8 py-6">
+                                         <div className="flex items-center gap-4">
+                                             <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-black">
+                                                 {u.name.charAt(0).toUpperCase()}
+                                             </div>
+                                             <span className="font-bold text-lg">{u.name}</span>
+                                         </div>
+                                     </td>
+                                     <td className="px-8 py-6 text-gray-400 font-medium">{u.email}</td>
+                                     <td className="px-8 py-6">
+                                         <span className={`px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-red-500/20 text-red-400' : u.role === 'creator' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'}`}>
+                                             {u.role}
+                                         </span>
+                                     </td>
+                                     <td className="px-8 py-6">
+                                         <span className={`px-3 py-1 rounded-full text-xs font-bold ${u.status === 'active' ? 'bg-green-500/20 text-green-400' : u.status === 'banned' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                                             {u.status}
+                                         </span>
+                                     </td>
+                                     <td className="px-8 py-6 text-gray-500 text-sm font-bold">{new Date(u.createdAt).toLocaleDateString()}</td>
+                                     <td className="px-8 py-6 text-right">
+                                         <div className="flex gap-2">
+                                             <button 
+                                                 onClick={() => handleRoleChange(u._id, u.role === 'admin' ? 'user' : 'admin')}
+                                                 className="p-2 rounded-xl bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white transition-all"
+                                             >
+                                                 {u.role === 'admin' ? 'Demote' : 'Promote'}
+                                             </button>
+                                             <button 
+                                                 onClick={() => handleStatusChange(u._id, u.status === 'active' ? 'banned' : 'active')}
+                                                 className="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                                             >
+                                                 {u.status === 'active' ? 'Ban' : 'Activate'}
+                                             </button>
+                                             <button 
+                                                 onClick={() => handleDeleteUser(u._id)}
+                                                 className="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                                             >
+                                                 <Trash2 size={16} />
+                                             </button>
+                                         </div>
+                                     </td>
+                                 </tr>
+                             ))}
+                         </tbody>
+                     </table>
+                 </div>
             </div>
         )}
 
