@@ -10,8 +10,57 @@ const AdminPanel = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("stats");
+  const [confirmDelete, setConfirmDelete] = useState(null);
+  const [confirmAction, setConfirmAction] = useState(null);
 
-    useEffect(() => {
+  const handleRoleChange = async (userId, newRole) => {
+    if (window.confirm(`Are you sure you want to change user role to ${newRole}?`)) {
+      try {
+        await API.patch(`/admin/users/${userId}/role`, { role: newRole });
+        // Update local state
+        setUsers(prevUsers => 
+          prevUsers.map(user => 
+            user._id === userId ? {...user, role: newRole} : user
+          )
+        );
+      } catch (err) {
+        console.error(err);
+        alert("Failed to update user role");
+      }
+    }
+  };
+
+  const handleStatusChange = async (userId, newStatus) => {
+    if (window.confirm(`Are you sure you want to ${newStatus === 'banned' ? 'ban' : 'activate'} this user?`)) {
+      try {
+        await API.patch(`/admin/users/${userId}/status`, { status: newStatus });
+        // Update local state
+        setUsers(prevUsers => 
+          prevUsers.map(user => 
+            user._id === userId ? {...user, status: newStatus} : user
+          )
+        );
+      } catch (err) {
+        console.error(err);
+        alert("Failed to update user status");
+      }
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
+      try {
+        await API.delete(`/admin/users/${userId}`);
+        // Remove from local state
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
+      } catch (err) {
+        console.error(err);
+        alert("Failed to delete user");
+      }
+    }
+  };
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const [statsRes, usersRes, quizzesRes] = await Promise.all([
@@ -189,7 +238,7 @@ const AdminPanel = () => {
 
                 <div className="grid grid-cols-1 gap-8">
                     {quizzes.map((q) => (
-                        <div key={q._id} className="bg-[#112240] p-10 rounded-[48px] border border-white/5 hover:border-cyan-500/20 transition-all duration-500">
+                        <div key={q._id} className={`bg-[#112240] p-10 rounded-[48px] border border-white/5 hover:border-cyan-500/20 transition-all duration-500 ${q.status === 'pending' ? 'border-yellow-500/30' : q.status === 'approved' ? 'border-green-500/30' : 'border-red-500/30'}`}>
                             <div className="flex justify-between items-start mb-8">
                                 <div>
                                     <span className="px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-black tracking-widest uppercase mb-4 inline-block">
@@ -198,8 +247,20 @@ const AdminPanel = () => {
                                     <h3 className="text-3xl font-black">{q.title}</h3>
                                 </div>
                                 <div className="text-right">
-                                    <div className="text-xs font-black text-gray-500 uppercase tracking-widest">Total Logic Points</div>
-                                    <div className="text-2xl font-black text-white">{q.questions.length} Questions</div>
+                                    <div className="flex flex-col items-end">
+                                        <div className="text-xs font-black text-gray-500 uppercase tracking-widest mb-1">
+                                            Status
+                                        </div>
+                                        <div className={`px-3 py-1 rounded-full text-xs font-bold ${q.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' : q.status === 'approved' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                            {q.status.charAt(0).toUpperCase() + q.status.slice(1)}
+                                        </div>
+                                        <div className="text-xs font-black text-gray-500 uppercase tracking-widest mt-2">
+                                            Total Logic Points
+                                        </div>
+                                        <div className="text-2xl font-black text-white">
+                                            {q.questions.length} Questions
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -223,6 +284,28 @@ const AdminPanel = () => {
                                         ))}
                                     </div>
                                 </details>
+                                {q.status === 'pending' && (
+                                    <div className="flex gap-4 pt-6">
+                                        <button 
+                                            onClick={() => handleApproveQuiz(q._id)}
+                                            className="flex-1 px-6 py-3 rounded-xl bg-green-500/20 text-green-400 font-bold hover:bg-green-500 hover:text-white transition-all"
+                                        >
+                                            APPROVE
+                                        </button>
+                                        <button 
+                                            onClick={() => handleRejectQuiz(q._id)}
+                                            className="flex-1 px-6 py-3 rounded-xl bg-red-500/20 text-red-400 font-bold hover:bg-red-500 hover:text-white transition-all"
+                                        >
+                                            REJECT
+                                        </button>
+                                    </div>
+                                )}
+                                {q.status !== 'pending' && (
+                                    <div className="pt-4 text-xs font-bold text-gray-400">
+                                        {q.moderatedBy ? `Moderated by: ${q.moderatedBy.name}` : 'Not yet moderated'} 
+                                        {q.moderatedAt ? ` on ${new Date(q.moderatedAt).toLocaleString()}` : ''}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
